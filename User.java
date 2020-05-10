@@ -36,6 +36,8 @@ public class User {
             else if (befehl.toLowerCase().equals("hilfe")) {
                 System.out.println("Meerschweinchen Simulator 1.0 by Charly:");
                 System.out.println("Zuerst musst du ein Meerschweinchen erstellen. Dazu schreibst du den Namen des Meerschweinchens und danach \"erstellen\".");
+                System.out.println("Du kannst auch ein faules Meerschweinchen erstellen, das am Anfang müde ist und dem du erst eine Erbsenflocke geben musst, damit es rennt.");
+                System.out.println("Dazu musst du nach erstellen noch ein Leerzeichen und dann \"faul\" schreiben!");
                 System.out.println("Als erstes gibst du den Namen des Meerschweinchens ein, das einen bestimmten Befehl ausführen soll.");
                 System.out.println("Danach schreibst du ein Leerzeichen und gibst den Befehl ein.");
                 System.out.println("Hier findest du die Befehle, die du eingeben kannst, um ein Meerschweinchen zu steuern:");
@@ -91,26 +93,36 @@ public class User {
                     }
                 }  
                 else if (teile.length ==3) {
-                    String name = teile[0].toLowerCase();
                     String tat = teile[1].toLowerCase();
-                    String opfer = teile[2].toLowerCase();
-                    Meerschweinchen m = findeMeerie(name);
-                    Meerschweinchen o = findeMeerie(opfer);
-                    if (m != null && o != null) {
-                        if (m != o) {
-                            if (tat.equals("jage")) {
+                    if (tat.equals("erstellen")) {
+                        String art = teile[2].toLowerCase();
+                        if (art.equals("faul")) {
+                            String name = teile[0];
+                            meeries.add(new FaulesMeerschweinchen(name));
+                        }
+                        else {
+                            System.out.println("Es tut mir leid, das kann ich nicht machen. Du kannst ein normales Meerschweinchen oder ein faules Meerschweinchen erstellen.");
+                        }
+                    }
+                    else if (tat.equals("jage")) {
+                        String name = teile[0].toLowerCase();                    
+                        String opfer = teile[2].toLowerCase();
+                        Meerschweinchen m = findeMeerie(name);
+                        Meerschweinchen o = findeMeerie(opfer);
+                        if (m != null && o != null) {
+                            if (m != o) {
                                 m.jage(o);
                             }
                             else {
-                                System.out.println("Es tut mir leid, diesen Befehl kenne ich nicht, falls du Hilfe benötigst, schreibe \"Hilfe\"."); 
+                                System.out.println ("Hier musst du zwei verschiedene Meerschweinchen angeben!");  
                             }
                         }
                         else {
-                            System.out.println ("Hier musst du zwei verschiedene Meerschweinchen angeben!");
+                            System.out.println ("Es tut mir leid, mindestens eins dieser Meerschweinchen kenne ich nicht, falls du Hilfe benötigst, schreibe \"Hilfe\"."); 
                         }
-                    }
+                    }                                                            
                     else {
-                        System.out.println ("Es tut mir leid, mindestens eins dieser Meerschweinchen kenne ich nicht, falls du Hilfe benötigst, schreibe \"Hilfe\".");
+                        System.out.println("Es tut mir leid, diesen Befehl kenne ich nicht, falls du Hilfe benötigst, schreibe \"Hilfe\".");                                             
                     }
                 }
             }
