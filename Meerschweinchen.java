@@ -2,16 +2,16 @@ public class Meerschweinchen {
     
     // Attribute
     protected String name;
-    protected boolean satt;
     protected boolean munter;
     protected boolean fröhlich;
+    protected int energie;
     
     // Constructor
     public Meerschweinchen(String _name) {
         name = _name;
-        satt = true;
         munter = true;
         fröhlich = true;
+        energie = 3;
         begrüßung();
     }
     
@@ -20,17 +20,12 @@ public class Meerschweinchen {
     protected void begrüßung() {
         sag("Hallo, ich bin es das Meerschweinchen " + name + "!");
     }
+    
     public String nameDesMeerschweinchens() {
         return name;
     }
     
     public void status() {
-        if (satt) {
-            sag("Ich bin satt. 😊");
-        }
-        else {
-            sag("Ich bin hungrig. Gib mir bitte was zu fressen. 🥕");
-        }
         if (munter) {
             sag("Ich bin munter! 🙂");
         }
@@ -43,18 +38,27 @@ public class Meerschweinchen {
         else {
             sag("Ich bin ärgerlich auf dich! *Grummel, grummel* 😠");
         }
+        if (energie == 3) {
+            sag("Ich bin voll Energie geladen und satt!");
+        }
+        else if (energie == 2 || energie == 1) {
+            sag("Joaaa...ich hab noch ein bisschen Energie und hab auch schon etwas hunger!");
+        }
+        else {
+            sag("Ich habe keine Energie mehr..., gib mir etwas zu fressen!");
+        }
     }
     
     public void sag(String _text) {
-        System.out.println("🐹" + name + " sagt: " + _text);
+        System.out.println("🐹 " + name + " sagt: " + _text);
     }
     
     public void friss() {
         System.out.println(name + " bekommt ein Möhrchen angeboten.");
-        if (!satt) {
+        if (energie != 3) {
             System.out.println(name + " frisst.");
-            satt = true;
-            sag ("Mhhh...das war lecker. Jetzt bin ich satt!");
+            energie = 3;
+            sag ("Mhhh...das war lecker. Jetzt bin ich satt und habe wieder Energie!");
         }
         else {
             sag("Nein danke, ich bin schon satt!");
@@ -67,10 +71,10 @@ public class Meerschweinchen {
     }   
     
     protected void rennintern() {
-        if (munter && satt && fröhlich) {
+        if (munter && energie>0 && fröhlich) {
             System.out.println(name + " rennt los. Die Ohren wehen im Wind!");
             munter = false;
-            satt = false;
+            energie = energie-1;
         }
         else {
             sag("Ich will jetzt nicht rennen.");
@@ -81,10 +85,10 @@ public class Meerschweinchen {
         System.out.println(name + ", renn los!");
         sag("Ich will jetzt nicht rennen.");
         System.out.println(name + ", SUDO renn los!");
-        System.out.println(name + " rennt langsam los, doch bleibt nach 30cm stehen. Die Energie des Meerschweinchens ist jetzt negativ und es ist jetzt ärgerlich auf dich.");
+        System.out.println(name + " rennt langsam los, doch bleibt nach 30cm stehen. Das Meerschweinchen ist jetzt ärgerlich auf dich und hat keine Energie mehr.");
         fröhlich = false;
-        satt = false;
         munter = false;
+        energie = 0;
     }
     
     public void erbsenflocke() {
@@ -96,8 +100,7 @@ public class Meerschweinchen {
     
     public void jage(Meerschweinchen _wen) {
         System.out.println(name + ", jage " + _wen.nameDesMeerschweinchens() + "!");
-        fröhlich = true;
-        if (satt && munter) {
+        if (energie>0 && munter) {
             System.out.println(name + " macht sich bereit um " + _wen.nameDesMeerschweinchens() + " zu jagen!");
             rennintern();
             _wen.sag ("Hilfe! Ich werde von " + name + " angegriffen!");

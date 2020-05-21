@@ -4,6 +4,7 @@ public class FaulesMeerschweinchen extends Meerschweinchen {
         super (_name);
         munter = false;
         erbsenflocke= false;
+        energie = 0;
     }
     
     protected void begrüßung() {
@@ -11,10 +12,10 @@ public class FaulesMeerschweinchen extends Meerschweinchen {
     }
     
     protected void rennintern() {
-        if (munter && satt && fröhlich && erbsenflocke) {
+        if (munter && energie>0 && fröhlich && erbsenflocke) {
             System.out.println(name + " rennt los. Die Ohren wehen im Wind!");
             munter = false;
-            satt = false;
+            energie = energie-1;
             erbsenflocke = false;
         }
         else if (!erbsenflocke) {
@@ -31,5 +32,19 @@ public class FaulesMeerschweinchen extends Meerschweinchen {
         sag ("Mhhh...lecker! Ich liebe Erbsenflocken! Jetzt bin ich fröhlich!");
         fröhlich = true;
         erbsenflocke = true;
+    }
+    
+    public void jage(Meerschweinchen _wen) {
+        System.out.println(name + ", jage " + _wen.nameDesMeerschweinchens() + "!");
+        fröhlich = true;
+        if (energie>0 && munter && erbsenflocke == true) {
+            System.out.println(name + " macht sich bereit um " + _wen.nameDesMeerschweinchens() + " zu jagen!");
+            rennintern();
+            _wen.sag ("Hilfe! Ich werde von " + name + " angegriffen!");
+            _wen.rennintern();
+        }
+        else {
+            sag ("Nö, ich bin gerade zu schlapp zum jagen.");
+        }
     }
 }
